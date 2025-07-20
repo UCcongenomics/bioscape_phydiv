@@ -6,9 +6,10 @@ def filter_fasta_files(asv_list_path, forward_fasta_path, reverse_fasta_path,
                        output_forward_fasta_path, output_reverse_fasta_path):
     """
     Filters FASTA files, removing sequences whose IDs are in a given list.
+    Automatically generates reverse ASV names from forward ones for removal.
 
     Args:
-        asv_list_path (str): Path to the text file containing ASV names to remove.
+        asv_list_path (str): Path to the text file containing ASV names to remove (expected to be forward names).
         forward_fasta_path (str): Path to the input forward ASV FASTA file.
         reverse_fasta_path (str): Path to the input reverse ASV FASTA file.
         output_forward_fasta_path (str): Path for the output filtered forward FASTA file.
@@ -18,8 +19,19 @@ def filter_fasta_files(asv_list_path, forward_fasta_path, reverse_fasta_path,
     try:
         with open(asv_list_path, 'r') as f:
             for line in f:
-                asvs_to_remove.add(line.strip())
-        print(f"Loaded {len(asvs_to_remove)} ASVs to remove from {asv_list_path}")
+                asv_name = line.strip()
+                asvs_to_remove.add(asv_name) # Add the original (forward) ASV name
+
+                # Generate and add the corresponding reverse ASV name
+                # Assumes the pattern is like 'ITS2_Plants_paired_F_XYZ' and needs to become 'ITS2_Plants_paired_R_XYZ'
+                if '_F_' in asv_name:
+                    reverse_asv_name = asv_name.replace('_F_', '_R_')
+                    asvs_to_remove.add(reverse_asv_name)
+                elif '_f_' in asv_name: # Also handle lowercase 'f' for robustness
+                    reverse_asv_name = asv_name.replace('_f_', '_r_')
+                    asvs_to_remove.add(reverse_asv_name)
+
+        print(f"Loaded {len(asvs_to_remove)} ASVs (including generated reverse counterparts) to remove from {asv_list_path}")
     except FileNotFoundError:
         print(f"Error: ASV list file '{asv_list_path}' not found. Cannot filter FASTA files.")
         return
@@ -29,9 +41,9 @@ def filter_fasta_files(asv_list_path, forward_fasta_path, reverse_fasta_path,
 
     # Filter Forward FASTA
     filtered_forward_records = []
+    total_forward_read = 0
+    removed_forward_read = 0
     try:
-        total_forward_read = 0
-        removed_forward_read = 0
         for record in SeqIO.parse(forward_fasta_path, "fasta"):
             total_forward_read += 1
             if record.id not in asvs_to_remove:
@@ -47,9 +59,9 @@ def filter_fasta_files(asv_list_path, forward_fasta_path, reverse_fasta_path,
 
     # Filter Reverse FASTA
     filtered_reverse_records = []
+    total_reverse_read = 0
+    removed_reverse_read = 0
     try:
-        total_reverse_read = 0
-        removed_reverse_read = 0
         for record in SeqIO.parse(reverse_fasta_path, "fasta"):
             total_reverse_read += 1
             if record.id not in asvs_to_remove:
@@ -73,12 +85,6 @@ if __name__ == "__main__":
     # Names for the new filtered output files
     OUTPUT_FORWARD_FASTA = "filtered_ITS2_forward_asvs.fasta"
     OUTPUT_REVERSE_FASTA = "filtered_ITS2_reverse_asvs.fasta"
-    # ---------------------
 
-    filter_fasta_files(
-        ASV_LIST_FILE,
-        FORWARD_ASV_FASTA,
-        REVERSE_ASV_FASTA,
-        OUTPUT_FORWARD_FASTA,
-        OUTPUT_REVERSE_FASTA
-    )
+    filter_fasta_files(ASV_LIST_FILE, FORWARD_ASV_FASTA, REVERSE_ASV_FASTA,
+                       OUTPUT_FORWARD_FASTA, OUTPUT_REVERSE_FASTA)
