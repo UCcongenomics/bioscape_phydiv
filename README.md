@@ -28,7 +28,9 @@ If you haven't already, create a Conda environment (e.g., `my_bio_env`) and acti
 ```bash
 conda create -n my_bio_env python=3.9  # You can choose your preferred Python 3.x version
 conda activate my_bio_env
-2. Install Dependencies
+
+**### 2. Install Dependencies
+**
 Once your environment is activated, install the necessary libraries:
 
 Bash
