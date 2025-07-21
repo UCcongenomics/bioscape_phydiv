@@ -28,9 +28,7 @@ If you haven't already, create a Conda environment (e.g., `my_bio_env`) and acti
 ```bash
 conda create -n my_bio_env python=3.9  # You can choose your preferred Python 3.x version
 conda activate my_bio_env
-
-### 2. Install Dependencies
-
+2. Install Dependencies
 Once your environment is activated, install the necessary libraries:
 
 Bash
@@ -150,4 +148,3 @@ File Paths: Always double-check the file paths defined within each Python script
 ASV Naming: The scripts assume a consistent ASV naming convention, particularly for identifying forward reads in unmerged pairs (e.g., containing _F_ in their ID) and for matching ASVs between different files.
 
 Conda Environment: Always activate your my_bio_env environment before running any of the Python scripts (conda activate my_bio_env).
-
