@@ -45,19 +45,8 @@ BBMERGE_PATH: Crucially, update this to the absolute path of your bbmerge.sh exe
 # Ensure input file structure:
 The pipeline expects your data to be organized hierarchically:
 
-BASE_BIO_DIR/
-├── PlateA/
-│   ├── 16S_Bacteria/
-│   │   └── paired/
-│   │       ├── [unique_prefix]-16S_Bacteria-paired_F.asv
-│   │       ├── [unique_prefix]-16S_Bacteria-paired.txt
-│   │       ├── [unique_prefix]-16S_Bacteria-paired_F.fasta
-│   │       └── [unique_prefix]-16S_Bacteria-paired_R.fasta
-│   └── ITS1_Fungi/
-│       └── paired/
-│           ├── ...
-└── PlateB/
-    └── ...
+<img width="544" height="282" alt="Screenshot 2025-07-22 at 1 49 03 PM" src="https://github.com/user-attachments/assets/2dbca15a-cbda-4974-84b5-520e354436e4" />
+
 
 Where [unique_prefix] is an identifier specific to your DADA2 output files (e.g., clve5i5mn0003l50gam95h4jx).
 
