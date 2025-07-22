@@ -1,10 +1,3 @@
-Coding partner
-
-Show thinking
-Here's a README file for your updated ASV processing workflow. This README covers the purpose, setup, usage, and output of your pipeline, incorporating all the scripts and modifications we've discussed.
-
-Markdown
-
 # ASV Processing Pipeline
 
 ## Overview
@@ -35,9 +28,10 @@ Ensure you have the following Python libraries installed in your environment (pr
 * `biopython`
 
 You can install them using pip:
-```bash
 pip install pandas numpy biopython
-Setup
+
+**   ##Setup
+**   
 Organize your scripts:
 Place all the Python scripts (i.e., run_pipeline_loop.py, create_asv_count_table.py, identify_unassigned_asvs.py, filter_fasta_by_asv_list.py, combine_merged_and_unmerged_forwards.py, and asv_summary_generator.py) in the same directory.
 
@@ -64,22 +58,20 @@ BASE_BIO_DIR/
 │           ├── ...
 └── PlateB/
     └── ...
+
 Where [unique_prefix] is an identifier specific to your DADA2 output files (e.g., clve5i5mn0003l50gam95h4jx).
 
-Usage
+##Usage
 Activate your Python environment:
 It is highly recommended to use a dedicated Python environment (like a conda environment) where all prerequisites are installed.
 
-Bash
-
 conda activate my_bio_env
 # Or source activate my_bio_env (for older conda versions)
+
 Run the pipeline:
 Navigate to the directory where you saved run_pipeline_loop.py and execute it:
-
-Bash
-
 python run_pipeline_loop.py
+
 The script will then print its progress to the console as it processes each plate and marker.
 
 Output
@@ -115,3 +107,7 @@ combine_merged_and_unmerged_forwards.py: Combines the ASV sequences that were su
 create_asv_count_table.py: Generates the final ASV abundance table, integrating read counts from the .asv file, taxonomic information from the .txt file, and ASV sequences from the combined FASTA. Crucially, it now excludes ASVs that lack a taxonomic entry.
 
 asv_summary_generator.py: The new script that reads the _final_asv_table.tsv and generates the ASV read count histogram and the unique taxonomy counts.
+
+
+
+
