@@ -1,2 +1,0 @@
-conda activate my_bio_env
-conda install -c conda-forge biopython mamba
